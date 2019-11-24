@@ -1,6 +1,9 @@
 {
   "mongoDbConfig": {
-    "connectionString": "MONGODB-CONNECTION-STRING",
-    "database": "interviewer"
+    "connectionString": "MONGODB-CONNECTION-STRING"
+  },
+  "jwt": {
+    "secret": "1234",
+    "expiryDays": 30
   }
 }
