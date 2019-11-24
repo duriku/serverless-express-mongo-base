@@ -1,4 +1,7 @@
 node_modules
 .serverless
-.idea
 
+config/config.json
+
+.idea
+serverless-express-mongo-base.iml

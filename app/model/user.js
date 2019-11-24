@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-delete mongoose.connection.models['User'];
+delete mongoose.connection.models['User']
 const userSchema = new Schema({
   email: {
     type: String,
@@ -19,6 +19,6 @@ const userSchema = new Schema({
     type: String,
     required: true
   }
-});
+})
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)

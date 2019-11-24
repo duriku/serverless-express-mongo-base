@@ -1,0 +1,6 @@
+{
+  "mongoDbConfig": {
+    "connectionString": "MONGODB-CONNECTION-STRING",
+    "database": "interviewer"
+  }
+}
