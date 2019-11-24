@@ -1,12 +1,14 @@
+const eventRepository = require('../repository/event.repository')
+
 module.exports = app => {
 
     /**
      * Get events belonging to user from MongoDb
      */
-    app.get('/event', async ({requestContext, params}, res, next) => {
+    app.get('/event', async ({user}, res, next) => {
         try {
-            // TODO: get events from event service
-            res.json({message: 'success'})
+            const events = await eventRepository.getEventsByUserId(user.id)
+            res.json(events)
         } catch (e) {
             next(e)
         }
@@ -15,9 +17,10 @@ module.exports = app => {
     /**
      * Persist a new event in MongoDB
      */
-    app.put('/event', async ({body}, res, next) => {
+    app.put('/event', async ({user, body}, res, next) => {
         try {
-            // TODO: create event by calling the event service
+            const {name, state} = body
+            await eventRepository.createEvent({userId: user.id, name, state})
             res.json({message: 'success'})
         } catch (e) {
             next(e)

@@ -9,7 +9,7 @@ module.exports = obtainMongoConnection = async () => {
     if (mongoose.connection.readyState) {
         console.log('=> using EXISTING database connection')
     } else {
-        const {mongoDbConfig} = ConfigService.getConfig();
+        const {mongoDbConfig} = ConfigService.getConfig()
         console.log(`=> using NEW database connection ${mongoDbConfig.connectionString}`)
         await mongoose.connect(mongoDbConfig.connectionString)
     }

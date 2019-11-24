@@ -1,7 +1,7 @@
 module.exports = class ResourceAlreadyExistsError extends Error {
     constructor(message) {
-        super();
+        super()
         this.message = message
-        this.code = 409;
+        this.code = 409
     }
 }

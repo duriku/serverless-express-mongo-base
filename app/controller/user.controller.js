@@ -1,5 +1,4 @@
-const userService = require('../service/user.service');
-
+const userService = require('../service/user.service')
 
 module.exports = app => {
 
@@ -20,7 +19,7 @@ module.exports = app => {
      */
     app.post('/register', async ({body}, res, next) => {
         try {
-            const user = await userService.createUser(body)
+            const user = await userService.register(body)
             res.json(user)
         } catch (e) {
             next(e)

@@ -5,6 +5,6 @@ module.exports = (err, req, res, next) => {
         return
     }
 
-    const errorCode = err.code || 500;
+    const errorCode = err.code || 500
     res.status(errorCode).send({message: err.message})
 }

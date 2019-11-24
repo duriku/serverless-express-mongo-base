@@ -1,7 +1,7 @@
 module.exports = class InvalidPasswordError extends Error {
     constructor(message) {
-        super();
+        super()
         this.message = message
-        this.code = 400;
+        this.code = 400
     }
 }

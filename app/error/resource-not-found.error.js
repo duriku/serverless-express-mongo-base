@@ -1,7 +1,7 @@
 module.exports = class ResourceNotFoundError extends Error {
     constructor(message) {
-        super();
+        super()
         this.message = message
-        this.code = 404;
+        this.code = 404
     }
 }

@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs')
+
 const User = require('../model/user')
 const ResourceNotFoundError = require('../error/resource-not-found.error')
 const ResourceAlreadyExistsError = require('../error/resource-already-exists-error')
@@ -6,19 +8,20 @@ const obtainMongoConnection = require('../service/mongoose.access.service')
 
 
 module.exports = {
-    getUserByEmailAndPassword: async ({email, hashedPassword}) => {
+    getUserByEmailAndPassword: async ({email, password}) => {
         await obtainMongoConnection()
-        const user = await User.find({email})
+        const user = await User.findOne({email})
 
         throwIfUserNotFoundWithEmail({user, email})
-        throwIfPasswordDoesNotMatch({user, hashedPassword})
+        await throwIfPasswordDoesNotMatch({user, password})
+        return user
     },
 
-    createUser: async ({email, firstName, lastName, hashedPassword}) => {
+    createUser: async ({email, firstName, lastName, password}) => {
         await obtainMongoConnection()
 
-        await throwIfEmailExist()
-        return await new User({email, firstName, lastName, hashedPassword}).save()
+        await throwIfEmailExist(email)
+        return await new User({email, firstName, lastName, hashedPassword: await hashPassword(password)}).save()
     }
 }
 
@@ -28,15 +31,19 @@ const throwIfUserNotFoundWithEmail = ({user, email}) => {
     }
 }
 
-const throwIfPasswordDoesNotMatch = ({user, password}) => {
-    if (user.hashedPassword !== password) {
+const throwIfPasswordDoesNotMatch = async ({user, password}) => {
+    const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword)
+    if (!isPasswordCorrect) {
         throw new InvalidPasswordError(`Password does not match`)
     }
 }
 
 const throwIfEmailExist = async (email) => {
-    const user = await User.find(email)
+    const user = await User.findOne({email})
     if (!!user) {
         throw new ResourceAlreadyExistsError(`User with ${email} email already exist!`)
     }
 }
+
+const hashPassword = async (password) => await bcrypt.hash(password, 12)
+
