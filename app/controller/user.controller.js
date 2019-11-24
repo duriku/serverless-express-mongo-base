@@ -7,8 +7,8 @@ module.exports = app => {
      */
     app.post('/login', async ({body}, res, next) => {
         try {
-            const user = await userService.login(body)
-            res.json(user)
+            const token = await userService.login(body)
+            res.json(token)
         } catch (e) {
             next(e)
         }
@@ -19,8 +19,8 @@ module.exports = app => {
      */
     app.post('/register', async ({body}, res, next) => {
         try {
-            const user = await userService.register(body)
-            res.json(user)
+            const token = await userService.register(body)
+            res.json(token)
         } catch (e) {
             next(e)
         }

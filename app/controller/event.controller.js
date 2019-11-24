@@ -20,8 +20,8 @@ module.exports = app => {
     app.put('/event', async ({user, body}, res, next) => {
         try {
             const {name, state} = body
-            await eventRepository.createEvent({userId: user.id, name, state})
-            res.json({message: 'success'})
+            const event = await eventRepository.createEvent({userId: user.id, name, state})
+            res.json(event)
         } catch (e) {
             next(e)
         }
